@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AgendamentoController extends Controller
 {
-    public function index()
+    protected function validator(array $data)
     {
-        $data['agenda'] = Agendamento::orderby('data')->get();
-        $data['usuarios'] = User::get();
-
-        return view('agenda')->with('data', $data);
+        return Validator::make($data, [
+            'data' => ['required', 'date', 'min:today'],
+            'periodo' => ['required'],
+            'espaco' => ['required'],
+            'solicitante' => ['required'],
+        ]);
     }
 
     public function create()
@@ -36,15 +38,22 @@ class AgendamentoController extends Controller
     public function store(Request $request)
     {      
         if(Auth::user()->is_admin == 0){
-            Agendamento::create([
-                'periodo' => $request->input('periodo'),
-                'espaco' => $request->input('espaco'),
-                'solicitante' => Auth::user()->id,
-                'data' => $request->input('data'),
-            ]);  
-            
-            $request->session()->flash('success', 'The event was successfully saved!');
-            return redirect('home');
+            $same = Agendamento::where(array('periodo' => $request->input('periodo'), 'data' => $request->input('data'), 'espaco' => $request->input('espaco')));
+
+            if(!isset($same)){
+                Agendamento::create([
+                    'periodo' => $request->input('periodo'),
+                    'espaco' => $request->input('espaco'),
+                    'solicitante' => Auth::user()->id,
+                    'data' => $request->input('data'),
+                ]);  
+                
+                return redirect('home');
+            }
+            else{
+                $request->session()->flash('flash_message', 'Esse espaço já está reservado nesse horário. Escolha outra data ou período.');
+                return redirect('agendar');
+            }
         }
     }
 

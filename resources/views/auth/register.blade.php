@@ -40,16 +40,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="is_admin" class="col-md-4 col-form-label text-md-right">{{ __('Perfil:') }}</label>
-                            <div class="col-md-6">
-                                <select name="is_admin" id="is_admin" class="form-control">
-                                    <option value="0">Solicitante</option>
-                                    <option value="1">Administrador</option>
-                                </select>  
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Criar senha:') }}</label>
 
                             <div class="col-md-6">

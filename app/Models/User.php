@@ -20,6 +20,10 @@ class User extends Authenticatable
         'nome',
         'prontuario',
         'senha',
-        'is_admin',
     ];
+
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
 }

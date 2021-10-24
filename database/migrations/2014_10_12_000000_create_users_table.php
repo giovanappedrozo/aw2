@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nome');
             $table->string('prontuario')->unique();
             $table->string('senha');
-            $table->boolean('is_admin');
+            $table->boolean('is_admin')->default(0);
             $table->timestamps();
         });
     }

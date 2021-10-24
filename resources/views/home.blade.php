@@ -5,17 +5,35 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Reservas') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                @foreach($data['agenda'] as $agendamento)
+                    @if(Auth::user()->is_admin == 1) <a href="agendamento/{{$agendamento->id}}"> @endif
+                        <div class="card-body">
+                            <div>
+                                {{ __('Espaço:') }}
+                                {{$agendamento->espaco}}
+                            </div>
+                            <div>
+                                {{ __('Periodo:') }}
+                                {{$agendamento->periodo}}
+                            </div>
+                            <div>
+                                {{ __('Data:') }}
+                                {{$agendamento->data}}
+                            </div>
+                            <div>
+                                {{ __('Solicitante:') }}
+                                @foreach($data['usuarios'] as $usuario)
+                                    @if($usuario->id == $agendamento->solicitante)
+                                        {{$usuario->nome}}
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+                    </a>
+                    <hr>
+                @endforeach
             </div>
         </div>
     </div>
