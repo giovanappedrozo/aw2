@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Suas reservas') }}</div>
 
                 @foreach($data['agenda'] as $agendamento)
-                    @if(Auth::user()->id == $agendamento->solicitante)
+                    <a href="/agendamento/{{$agendamento->id}}">
                         <div class="card-body">
                             <div>
                                 {{ __('Espaço:') }}

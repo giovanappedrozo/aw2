@@ -51,4 +51,23 @@ class LoginController extends Controller
     {
         return 'prontuario';
     }
+
+    public function login(Request $request)
+    {
+        $input = $request->all();
+
+        $user = User::where('prontuario', $input['prontuario'])->first();
+        if(isset($user)){
+            if (Hash::check($input['senha'], $user->senha)) {
+                if ($user->is_admin == 1) {
+                    return redirect()->route('admin.home');
+                }else{
+                    return redirect()->route('home');
+                }
+            }else{
+                $request->session()->flash('flash_message', 'Prontuário ou senha incorreta');
+                return redirect()->route('login');
+            }
+        }
+    }
 }

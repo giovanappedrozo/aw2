@@ -25,3 +25,5 @@ Route::get('/agendar', [App\Http\Controllers\AgendamentoController::class, 'crea
 Route::post('/agendar/store', [App\Http\Controllers\AgendamentoController::class, 'store'])->name('agendar/store');
 Route::get('/agendamento/{id}', [App\Http\Controllers\AgendamentoController::class, 'show']);
 Route::post('/update', [App\Http\Controllers\AgendamentoController::class, 'update'])->name('update');
+
+Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
