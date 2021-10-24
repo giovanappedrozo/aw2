@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Suas reservas') }}</div>
+                <div class="card-header">{{ __('Reservas') }}</div>
 
                 @foreach($data['agenda'] as $agendamento)
                     <a href="/agendamento/{{$agendamento->id}}">
@@ -33,7 +33,6 @@
                         </div>
                     </a>
                     <hr>
-                    @endif
                 @endforeach
             </div>
         </div>

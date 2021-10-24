@@ -69,14 +69,18 @@ class AgendamentoController extends Controller
     public function update(Request $request)
     {        
         if(Auth::user()->is_admin == 1){
-            Agendamento::where('id', $request->input('id'))->update([
+            $agendamento = Agendamento::where('id', $request->input('id'));
+            $agendamento->update([
                 'periodo' => $request->input('periodo'),
                 'espaco' => $request->input('espaco'),
-                'solicitante' => $request->input('solicitante'),
                 'data' => $request->input('data'),
             ]);  
 
-            return redirect('agenda');
+            $user = User::where('id', $agendamento->solicitante);
+
+            Notification::send($user, new UpdateNotification($agendamento));
+
+            return redirect('admin/home');
         }
     }
 

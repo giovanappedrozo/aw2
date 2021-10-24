@@ -33,6 +33,10 @@ class HomeController extends Controller
 
     public function adminHome(Request $request)
     {
-        return view('adminHome');
+        $data['agenda'] = Agendamento::orderby('data')->get();
+        $data['usuarios'] = User::get();
+
+
+        return view('adminHome')->with('data', $data);
     }
 }
