@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Agendamento;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\UpdateNotification;
+use Illuminate\Support\Facades\Notification;
 
 class AgendamentoController extends Controller
 {
@@ -24,7 +26,9 @@ class AgendamentoController extends Controller
         $data['date'] = date('Y-m-d');
         $data['periodos'] = self::periodos();
         $data['espacos'] = self::espacos();
-        return view('agendar')->with('data', $data);
+        $notifications = auth()->user()->unreadNotifications;
+
+        return view('agendar', compact('notifications'))->with('data', $data);
     }
     
     public function periodos(){
@@ -38,9 +42,9 @@ class AgendamentoController extends Controller
     public function store(Request $request)
     {      
         if(Auth::user()->is_admin == 0){
-            $same = Agendamento::where(array('periodo' => $request->input('periodo'), 'data' => $request->input('data'), 'espaco' => $request->input('espaco')));
+            $same = Agendamento::where(array('periodo' => $request->input('periodo'), 'data' => $request->input('data'), 'espaco' => $request->input('espaco')))->first();
 
-            if(!isset($same)){
+            if(!$same){
                 Agendamento::create([
                     'periodo' => $request->input('periodo'),
                     'espaco' => $request->input('espaco'),
@@ -63,7 +67,9 @@ class AgendamentoController extends Controller
         $data['agendamento'] = Agendamento::where('id', $id)->first();
         $data['periodos'] = self::periodos();
         $data['espacos'] = self::espacos();
-        return view('agendamento')->with('data', $data);
+        $notifications = auth()->user()->unreadNotifications;
+
+        return view('agendamento', compact('notifications'))->with('data', $data);
     }
 
     public function update(Request $request)
@@ -75,8 +81,9 @@ class AgendamentoController extends Controller
                 'espaco' => $request->input('espaco'),
                 'data' => $request->input('data'),
             ]);  
+            $agendamento = $agendamento->first();
 
-            $user = User::where('id', $agendamento->solicitante);
+            $user = User::where('id', $agendamento->solicitante)->first();
 
             Notification::send($user, new UpdateNotification($agendamento));
 

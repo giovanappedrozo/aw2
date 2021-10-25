@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Agendamento;
+use App\Notifications;
 
 class UpdateNotification extends Notification
 {
@@ -17,7 +17,7 @@ class UpdateNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento)
+    public function __construct($agendamento)
     {
         $this->agendamento = $agendamento;
     }
@@ -56,7 +56,7 @@ class UpdateNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'data' => $this->agendamento->data
+            'agendamento' => $this->agendamento
         ];
     }
 }

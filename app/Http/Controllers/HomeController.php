@@ -27,8 +27,9 @@ class HomeController extends Controller
     {
         $data['agenda'] = Agendamento::orderby('data')->get();
         $data['usuarios'] = User::get();
+        $notifications = auth()->user()->unreadNotifications;
 
-        return view('home')->with('data', $data);
+        return view('home', compact('notifications'))->with('data', $data);
     }
 
     public function adminHome(Request $request)
