@@ -41,8 +41,11 @@ class AgendamentoController extends Controller
 
     public function store(Request $request)
     {      
+        $espacos = self::espacos();
+        $periodos = self::periodos();
+
         if(Auth::user()->is_admin == 0){
-            $same = Agendamento::where(array('periodo' => $request->input('periodo'), 'data' => $request->input('data'), 'espaco' => $request->input('espaco')))->first();
+            $same = Agendamento::where(array('periodo' => $periodos[$request->input('periodo')-1], 'data' => $request->input('data'), 'espaco' => $espacos[$request->input('espaco')-1]))->first();
 
             if(!$same){
                 Agendamento::create([
