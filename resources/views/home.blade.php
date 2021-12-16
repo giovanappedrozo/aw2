@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Suas reservas') }}</div>
+                <div class="card-header bg-dark text-white">{{ __('Suas reservas') }}</div>
 
                 @foreach($data['agenda'] as $agendamento)
                     @if(Auth::user()->id == $agendamento->solicitante)

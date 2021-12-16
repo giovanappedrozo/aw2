@@ -72,5 +72,9 @@ class LoginController extends Controller
                 return redirect()->route('login');
             }
         }
+        else{
+            $request->session()->flash('flash_message', 'Prontuário ou senha incorreta');
+            return redirect()->route('login');
+        }
     }
 }

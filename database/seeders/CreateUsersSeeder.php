@@ -19,6 +19,7 @@ class CreateUsersSeeder extends Seeder
                'nome'=>'Admin',
                'prontuario'=>'SP1010101',
                 'is_admin'=>'1',
+                'email' =>'teste@teste.com',
                'senha'=> bcrypt('123456'),
             ]
         ];

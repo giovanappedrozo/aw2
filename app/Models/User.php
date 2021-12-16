@@ -20,6 +20,7 @@ class User extends Authenticatable
         'nome',
         'prontuario',
         'senha',
+        'email',
     ];
 
     public function getAuthPassword()

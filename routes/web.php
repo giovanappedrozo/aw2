@@ -19,6 +19,20 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/email', function () {
+    if (Request::get ( 'message' ) != null)
+        $data = array (
+                'bodyMessage' => Request::get ( 'message' ) 
+        );
+    else
+        $data [] = '';
+
+        Mail::send ( 'emails/test', $data, function ($message) {
+        $message->to (auth()->user()->email)->subject ( 'Espaço reservado' );
+    } );
+    return redirect('home');
+} )->name('email');
+
 Route::get('/agendar', [App\Http\Controllers\AgendamentoController::class, 'create'])->name('agendar');
 Route::post('/agendar/store', [App\Http\Controllers\AgendamentoController::class, 'store'])->name('agendar/store');
 Route::get('/agendamento/{id}', [App\Http\Controllers\AgendamentoController::class, 'show']);

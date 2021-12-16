@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reservar espaço') }}</div>
+                <div class="card-header bg-dark text-white">{{ __('Reservar espaço') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('agendar/store') }}">
